@@ -1,4 +1,4 @@
-Installation and Setup
+#Installation and Setup
 Clone the repository from GitHub.
    git clone https://github.com/heny3278/Cheetah/
 Ensure you have .NET 6 installed.
