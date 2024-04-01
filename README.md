@@ -2,7 +2,7 @@
 </br>
 Clone the repository from GitHub.
 </br>
-   git clone https://github.com/heny3278/Cheetah/
+   git clone "https://github.com/heny3278/Cheetah/"
    </br>
 Ensure you have .NET 6 installed.
 </br>
