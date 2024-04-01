@@ -12,4 +12,4 @@ Configure the connection string for your SQL Server database accordingly.
 </br>
 Update the database by executing the command in the Package Manager Console
 </br>
-<div>update-database</div> 
+<div border="solid">update-database</div> 
