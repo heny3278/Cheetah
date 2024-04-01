@@ -33,7 +33,7 @@ namespace CheeetahBLL
             return await _Account.Items.FindAsync(id);
         }
 
-
+      
         public async Task<List<Account>> GetAccounts()
         {
             var result = await _Account.Items.ToListAsync();
@@ -43,10 +43,11 @@ namespace CheeetahBLL
         public async Task<Account> UpdateAccountAsync(int id, Account entity)
         {
             entity.AccountId = id;
-            var saveTaskScheduling = _Account.Update(entity);
+            var result = _Account.Update(entity);
             await _Account.SaveChangesAsync();
-            return saveTaskScheduling.Entity;
+            return result.Entity;
         }
+
 
         public async Task DeleteAccountAsync(int id)
         {

@@ -1,4 +1,5 @@
 ﻿using CeetahDAL;
+using Cheetah;
 using CheetahDB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -9,9 +10,10 @@ namespace CheeetahBLL
     {
         private readonly BaseRepository<User> _User;
 
+
         public UserService(BaseRepository<User> User)
         {
-            _User = User;
+            _User = User; 
         }
 
         public async Task<User> AddUser(User user)
@@ -24,6 +26,17 @@ namespace CheeetahBLL
         public async Task<User> GetUserByID(int id)
         {
             return await _User.Items.FindAsync(id);
+        }
+
+        public async Task<User> GetUserByAccountAndUserID(int accountId, int userId)
+        {
+            return await _User.Items.FirstAsync(u=>u.AccountId == accountId && u.UserId == userId);
+        }
+
+        public async Task<List<User>> GetUsersByAccountId(int accountId)
+        {
+            return await _User.Items.Where(a => a.AccountId == accountId).ToListAsync();
+
         }
 
 

@@ -32,11 +32,9 @@ namespace CeetahDAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // הכנסת ערכים לטבלאות
-            //modelBuilder.Entity<T_FieldTypes>().HasData(new T_FieldTypes() { FieldTypesID = 1, FieldTypesDes = "טקסט חופשי" });
-            //modelBuilder.Entity<T_FieldTypes>().HasData(new T_FieldTypes() { FieldTypesID = 2, FieldTypesDes = "בחירה מרשימה" });
-
-            //modelBuilder.Entity<T_RegistrationDetailsType>().HasData(new T_RegistrationDetailsType() { RegistrationDetailsTypeID = 1, RegistrationDetailsTypeDes = "פרטים אישיים" });
+            modelBuilder.Entity<User>()
+            .HasIndex(u => u.Email)
+            .IsUnique();
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Account> Accounts { get; set; }

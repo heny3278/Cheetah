@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.Design;
 using System.ComponentModel;
+using CheetahDB;
 
 namespace Cheetah
 {
@@ -18,6 +19,8 @@ namespace Cheetah
 
         [DefaultValue("n/a")]
         public string Website { get; set; } 
+
+        public List<User>? users { get; set; }
 
      
 

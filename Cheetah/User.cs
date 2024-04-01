@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+//import org.hibernate.validator.constraints.UniqueConstraint; 
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Cheetah;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace CheetahDB
 {
@@ -15,11 +18,8 @@ namespace CheetahDB
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
 
-        [ForeignKey("AccountId")]
-        public int AccountId { get; set; }
-
-        public  Account Account { get; set; }
-
+        [ForeignKey("Account")]
+        public int? AccountId { get; set; }
 
         [Required]
         [MaxLength(128)]
@@ -32,6 +32,9 @@ namespace CheetahDB
         [EmailAddress]
         public string Email { get; set; }
 
-        
+
+
+
+
     }
 }

@@ -5,6 +5,8 @@ using CheetahApi.DTO;
 using CheetahDB;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using System;
 
 namespace CheetahApi.Controllers
 {
@@ -14,18 +16,20 @@ namespace CheetahApi.Controllers
     public class AccountController : Controller
     {
         private readonly AccountService _AccountService;
+        private readonly UserService _UserService;
         private readonly IMapper _mapper;
         private readonly ILogger<AccountController> _logger;
 
 
-        public AccountController(AccountService AccountService, IMapper mapper, ILogger<AccountController> logger)
+        public AccountController(UserService UserService, AccountService AccountService, IMapper mapper, ILogger<AccountController> logger)
         {
             _AccountService = AccountService;
+            _UserService = UserService;
             _mapper = mapper;
             _logger = logger;
         }
 
-        [HttpGet("account")]
+        [HttpGet]
         public async Task<ActionResult<List<AccountDTO>>> GetAccounts()
         {
             try
@@ -39,12 +43,15 @@ namespace CheetahApi.Controllers
             }
         }
 
-        [HttpGet("account/{AccountId}")]
-        public async Task<ActionResult<List<AccountDTO>>> GetAccountById(int userID)
+        [HttpGet("accountId")]
+        public async Task<ActionResult<AccountDTO>> GetAccountById(int accountId)
         {
             try
             {
-                return _mapper.Map<List<AccountDTO>>(await _AccountService.GetAccountByID(userID));
+                AccountDTO accout = _mapper.Map<AccountDTO>(await _AccountService.GetAccountByID(accountId));
+                accout.users = _mapper.Map<List<UserDTO>>(await _UserService.GetUsersByAccountId(accountId));
+                return accout;
+
             }
             catch (Exception ex)
             {
@@ -53,12 +60,14 @@ namespace CheetahApi.Controllers
             }
         }
 
+
+
         [HttpPost]
         public async Task<ActionResult<AccountDTO>> Post([FromBody] AccountDTO AccountDTO)
         {
             try
             {
-                var NewAccount =  _AccountService.AddAccount(_mapper.Map<Account>(AccountDTO)).Result;
+                var NewAccount = _AccountService.AddAccount(_mapper.Map<Account>(AccountDTO)).Result;
                 if (NewAccount is null)
                     return NotFound();
                 return _mapper.Map<AccountDTO>(NewAccount);
@@ -72,23 +81,38 @@ namespace CheetahApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<AccountDTO>> Put(int id, AccountDTO AccountDTO)
+        public async Task<ActionResult<AccountDTO>> Put(int id, [FromBody] AccountDTO AccountDTO)
         {
-            try
-            {
+            //try
+            //{
                 var user = await _AccountService.UpdateAccountAsync(id, _mapper.Map<Account>(AccountDTO));
                 if (user is null)
                     return NotFound();
                 return _mapper.Map<AccountDTO>(await _AccountService.GetAccountByID(id));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-                return BadRequest();
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    _logger.LogError(ex.Message);
+            //    return BadRequest();
+            //}
         }
 
-        [HttpDelete("{id}")]
+       
+
+        //[HttpPut("{id}")]
+        //public async Task<AccountDTO> Put(int id, [FromBody] AccountDTO AccountDTO)
+        //{
+        //    return _mapper.Map<AccountDTO>(await _AccountService.UpdateAccountAsync(id, new Account
+        //    {
+        //         AccountId = AccountDTO.AccountId;
+
+        //    }
+        //}
+
+
+
+
+            [HttpDelete("{id}")]
         public async Task<ActionResult<AccountDTO>> Delete(int id)
         {
             try
@@ -104,6 +128,11 @@ namespace CheetahApi.Controllers
                 return BadRequest();
             }
         }
-
     }
 }
+
+
+        //
+
+
+

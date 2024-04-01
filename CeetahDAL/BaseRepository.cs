@@ -29,15 +29,13 @@ namespace CeetahDAL
 
         public virtual EntityEntry<TEntity> Add(TEntity entity)
         {
-            if (entity.GetType().GetProperty("InsertDate") != null)
-                entity.GetType().GetProperty("InsertDate").SetValue(entity, DateTime.Now);
+            
             return Items.Add(entity);
         }
 
         public virtual EntityEntry<TEntity> Update(TEntity entity)
         {
-            if (entity.GetType().GetProperty("UpdateDate") != null)
-                entity.GetType().GetProperty("UpdateDate").SetValue(entity, DateTime.Now);
+            
             return Items.Update(entity);
         }
 

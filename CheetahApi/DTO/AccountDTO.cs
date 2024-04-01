@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CheetahDB;
+using System.ComponentModel.DataAnnotations;
 
 namespace CheetahApi.DTO
 {
@@ -12,6 +13,8 @@ namespace CheetahApi.DTO
 
         [Required(AllowEmptyStrings = true)]
         public string Website { get; set; }
+
+        public List<UserDTO> users { get; set; }
 
     }
 }

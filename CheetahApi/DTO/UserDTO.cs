@@ -9,10 +9,10 @@ namespace CheetahApi.DTO
         public int UserId { get; set; }
 
 
-        [ForeignKey("AccountId")]
+        [ForeignKey("Account")]
         public int AccountId { get; set; }
 
-        public Account Account { get; set; }
+
 
         [Required]
         [MaxLength(128)]
